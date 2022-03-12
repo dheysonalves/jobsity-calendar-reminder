@@ -1,6 +1,5 @@
-$white: #fff;
-$black: #000;
-$gray: #DDD;
+@import '_colors';
+@import '_sizes';
 
 body {
   margin: 0;
@@ -9,7 +8,8 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: $gray;
+  background-color: $white;
+  font-size: 16px;
 }
 
 code {

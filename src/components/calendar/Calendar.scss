@@ -1,0 +1,40 @@
+@import '../../styles/_colors.scss';
+@import './../../styles/sizes';
+
+.table-container {
+	@media screen and (min-width: $medium) {
+		width: 80vw;
+		height: 80vh;
+	}
+
+	width: 80vw;
+	height: 50vh;
+	border: 2px solid $dark_gray;
+
+	thead.calendar-thead {
+		background-color: $blue;
+	}
+
+	tr > th.week-day {
+		padding: 0.5rem;
+		font-weight: 500;
+		text-transform: uppercase;
+		color: $white;
+	}
+
+	td.calendar-day {
+		border: 2px dashed $border-gray;
+		padding: 0.25rem;
+		text-align: left;
+		vertical-align: baseline;
+	}
+
+	.today {
+		background-color: $light_green;
+	}
+
+	.empty {
+		border: none;
+		background-color: $light_gray;
+	}
+}
