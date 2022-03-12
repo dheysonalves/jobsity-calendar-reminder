@@ -11,7 +11,7 @@ const getWeatherConditions = ((cityName) => {
 		}).then(function (response) {
 			return response.data.weather;
 		}).catch(function (error) {
-			console.log(error);
+			console.log(error.toJSON());
 		});
 });
 
