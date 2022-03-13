@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import moment from 'moment';
 
 import './Calendar.scss';
+import Button from '../button/Button';
 
 export default function Calendar() {
 	const [dateObject] = useState(moment());
@@ -81,6 +82,10 @@ export default function Calendar() {
 
 	return (
 		<div className="container">
+			<div className="button-container">
+				<Button color='success' text='add reminder' type="button" />
+			</div>
+
 			<table className='table-container'>
 				<thead className="calendar-thead">
 					<tr>

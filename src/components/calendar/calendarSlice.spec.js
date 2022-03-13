@@ -13,8 +13,6 @@ describe('counter reducer', () => {
 	const DATA = {
 		"id": "04-11-2022",
 		"reminder": "Voyager Emissions Dashboard Rain",
-		"date": "04-11-2022",
-		"time": "14:23",
 		"datetime": "2022-02-28T14:27",
 		"city": "London",
 		"color": "blue",
