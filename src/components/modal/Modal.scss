@@ -1,7 +1,7 @@
 @import "../../styles/_colors.scss";
 @import "./../../styles/sizes";
 
-.Modal {
+.modal-container {
 	position: absolute;
 	top: 40px;
 	left: 40px;
@@ -9,7 +9,7 @@
 	bottom: 40px;
 	background-color: $white;
 	border-radius: 8px;
-	padding: 2em;
+	padding: 1.5em;
 	box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
 
 
@@ -18,5 +18,16 @@
 		left: 600px;
 		right: 600px;
 		bottom: 100px;
+		padding: 2em;
 	}
+}
+
+.container-close-btn {
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-end;
+}
+
+.cursor-pointer {
+	cursor: pointer;
 }
