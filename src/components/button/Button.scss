@@ -1,0 +1,36 @@
+@import "../../styles/_colors.scss";
+@import "../../styles/_sizes.scss";
+
+button.main-button {
+	outline: none;
+	border: none;
+	padding: 0.8em;
+	text-transform: uppercase;
+	color: $white;
+	font-weight: 600;
+	font-size: $fs-large;
+	cursor: pointer;
+	border-radius: 8px;
+
+	&:hover {
+		opacity: 0.9;
+	}
+
+	&:active {
+		opacity: 0.8;
+	}
+
+	&:focus {
+		outline: none;
+		box-shadow: 0 0 0 3px $gray;
+	}
+
+	&:disabled {
+		opacity: 0.9;
+		background-color: $gray;
+	}
+}
+
+button.contrast-color {
+	color: $dark_gray;
+}
