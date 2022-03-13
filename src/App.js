@@ -1,7 +1,7 @@
 import React from 'react';
+import Calendar from './components/calendar/Calendar';
 
 import './App.scss';
-import Calendar from './components/calendar/Calendar';
 
 function App() {
 
