@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { getWeatherConditions } from '../../api/weather';
 
 const initialState = {
-	reminders: [],
+	weather: null,
 	weatherStatus: 'idle'
 };
 
@@ -18,27 +18,19 @@ export const dateWeatherConditionsThunk = createAsyncThunk(
 export const calendarSlice = createSlice({
 	name: 'calendar',
 	initialState,
-	reducers: {
-		incrementReminder: (state, action) => {
-			state.reminders.push(action.payload);
-		},
-		deleteReminder: (state, action) => {
-			const newReminders = state.reminders.filter(reminder => reminder.id !== action.payload);
-			state.reminders = newReminders;
-		}
-	},
+	reducers: {},
 	extraReducers: (builder) => {
 		builder
 			.addCase(dateWeatherConditionsThunk.pending, (state) => {
 				state.weatherStatus = 'loading';
 			})
-			.addCase(dateWeatherConditionsThunk.fulfilled, (state) => {
+			.addCase(dateWeatherConditionsThunk.fulfilled, (state, action) => {
+				console.log(action.payload);
 				state.weatherStatus = 'idle';
+				state.weather = action.payload;
 			});
 	},
 });
-
-export const { deleteReminder, incrementReminder } = calendarSlice.actions;
 
 export const selectCalendar = (state) => state.calendar;
 

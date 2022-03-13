@@ -5,6 +5,7 @@ import ReactModal from 'react-modal';
 import './Calendar.scss';
 import Button from '../button/Button';
 import Modal from '../modal/Modal';
+import Reminderform from '../reminderForm/reminderForm';
 
 export default function Calendar() {
 	const [showModal, updateShowModal] = useState(false);
@@ -90,9 +91,7 @@ export default function Calendar() {
 	return (
 		<div className="container">
 			<Modal handleShowModal={() => handleShowModal(false)} showModal={showModal}>
-				<p>
-					aaaaa
-				</p>
+				<Reminderform />
 			</Modal>
 			<div className="button-container">
 				<Button color='success' text='add reminder' type="button" onClick={() => handleShowModal(true)} />
