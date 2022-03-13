@@ -1,12 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import moment from 'moment';
+import ReactModal from 'react-modal';
 
 import './Calendar.scss';
 import Button from '../button/Button';
+import Modal from '../modal/Modal';
 
 export default function Calendar() {
+	const [showModal, updateShowModal] = useState(false);
 	const [dateObject] = useState(moment());
 	const weekdayshort = moment.weekdaysShort();
+
+	const handleShowModal = useCallback((value) => {
+		updateShowModal(value);
+	}, []);
 
 	const weekdayshortname = weekdayshort.map(day => {
 		return (
@@ -35,7 +42,7 @@ export default function Calendar() {
 		let blanks = [];
 		for (let index = 0; index < firstDayOfMonth(); index++) {
 			blanks.push(
-				<td className="calendar-day empty">{""}</td>
+				<td className="calendar-day empty" key={`${index}-empty`}>{""}</td>
 			);
 		}
 		return blanks;
@@ -82,8 +89,13 @@ export default function Calendar() {
 
 	return (
 		<div className="container">
+			<Modal handleShowModal={() => handleShowModal(false)} showModal={showModal}>
+				<p>
+					aaaaa
+				</p>
+			</Modal>
 			<div className="button-container">
-				<Button color='success' text='add reminder' type="button" />
+				<Button color='success' text='add reminder' type="button" onClick={() => handleShowModal(true)} />
 			</div>
 
 			<table className='table-container'>
@@ -97,3 +109,5 @@ export default function Calendar() {
 		</div>
 	);
 }
+
+ReactModal.defaultStyles.overlay.backgroundColor = '#0006';
