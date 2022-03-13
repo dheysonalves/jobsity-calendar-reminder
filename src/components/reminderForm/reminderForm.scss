@@ -1,0 +1,48 @@
+@import "../../styles/_colors.scss";
+@import "./../../styles/sizes";
+
+.form-container {
+	display: flex;
+	height: 90%;
+	flex-direction: column;
+	justify-content: space-between;
+	padding: 1em;
+
+	.form-group {
+		display: flex;
+		flex-direction: column;
+		margin-bottom: 1.5em;
+
+		.row {
+			flex-direction: row;
+		}
+
+		.form-label {
+			font-size: $fs-large;
+			color: $dark_gray;
+			margin-bottom: $tiny;
+			font-weight: 600;
+		}
+
+		.form-input {
+			padding: 1rem;
+			border-radius: 8px;
+			border: 2px solid $border-gray;
+			font-size: $fs-large;
+			color: $dark_gray;
+
+			&::placeholder {
+				color: $gray;
+				font-size: $fs-large;
+				letter-spacing: 1px;
+			}
+		}
+
+		.form-input-radio {
+			margin-right: 1em;
+			margin-bottom: 1em;
+			height: 1em;
+			width: 1em;
+		}
+	}
+}
