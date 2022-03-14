@@ -11,9 +11,10 @@ describe('counter reducer', () => {
 	};
 
 	const DATA = {
-		"id": "04-11-2022",
+		"id": "28",
 		"reminder": "Voyager Emissions Dashboard Rain",
-		"datetime": "2022-02-28T14:27",
+		"date": "2022-02-28",
+		"time": "14:27",
 		"city": "London",
 		"color": "blue",
 		"weather": {
@@ -27,6 +28,7 @@ describe('counter reducer', () => {
 	it('should handle initial state', () => {
 		expect(reminderReducer(undefined, { type: 'unknown' })).toEqual({
 			reminders: [],
+			newReminders: [],
 		});
 	});
 
