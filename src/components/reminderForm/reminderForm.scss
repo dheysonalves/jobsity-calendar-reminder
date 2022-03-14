@@ -3,7 +3,7 @@
 
 .form-container {
 	display: flex;
-	height: 90%;
+	height: auto;
 	flex-direction: column;
 	justify-content: space-between;
 	padding: 1em;
@@ -36,6 +36,10 @@
 				font-size: $fs-large;
 				letter-spacing: 1px;
 			}
+		}
+
+		.form-error {
+			color: $error;
 		}
 
 		.form-input-radio {
