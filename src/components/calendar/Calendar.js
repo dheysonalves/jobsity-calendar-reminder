@@ -1,98 +1,41 @@
 import React, { useState, useCallback } from 'react';
-import moment from 'moment';
 import ReactModal from 'react-modal';
+import { useSelector } from 'react-redux';
 
 import './Calendar.scss';
 import Button from '../button/Button';
 import Modal from '../modal/Modal';
 import Reminderform from '../reminderForm/reminderForm';
+import { selectReminder } from '../reminderForm/reminderFormSlice';
+import useModal from '../../hooks/useModal';
+import useCalendar from '../../hooks/useCalendar';
 
 export default function Calendar() {
-	const [showModal, updateShowModal] = useState(false);
-	const [dateObject] = useState(moment());
-	const weekdayshort = moment.weekdaysShort();
+	const { handleShowModal, showModal } = useModal();
+	const [daySelected, updateDaySelected] = useState(0);
+	const { reminders } = useSelector(selectReminder);
 
-	const handleShowModal = useCallback((value) => {
-		updateShowModal(value);
-	}, []);
+	const onDayClick = useCallback((e, day) => {
+		updateDaySelected(day);
+		handleShowModal(true);
+	}, [daySelected, handleShowModal, showModal]);
 
-	const weekdayshortname = weekdayshort.map(day => {
+	const { weekdayshortname, daysinmonth } = useCalendar(reminders, onDayClick);
+
+	const RenderModal = useCallback(() => {
+		let specificReminder = null;
+
 		return (
-			<th key={day} className="week-day">
-				{day}
-			</th>
+			<Modal handleShowModal={() => handleShowModal(false)} showModal={showModal}>
+				<Reminderform reminderData={specificReminder} />
+			</Modal>
 		);
-	});
+	}, [handleShowModal, showModal, daySelected, reminders]);
 
-	const monthDays = (() => {
-		return dateObject.daysInMonth();
-	});
-
-	const currentDay = () => {
-		return dateObject.format("D");
-	};
-
-	const firstDayOfMonth = (() => {
-		let firstDay = moment(dateObject)
-			.startOf("month")
-			.format("d");
-		return firstDay;
-	});
-
-	const getBlanksFields = (() => {
-		let blanks = [];
-		for (let index = 0; index < firstDayOfMonth(); index++) {
-			blanks.push(
-				<td className="calendar-day empty" key={`${index}-empty`}>{""}</td>
-			);
-		}
-		return blanks;
-	});
-
-	const getMonthsDaysFields = (() => {
-		let daysInMonth = [];
-		for (let day = 1; day <= monthDays(); day++) {
-			let current = day == currentDay() ? "today" : "";
-
-			daysInMonth.push(
-				<td key={day} className={`calendar-day ${current}`}>
-					{day}
-				</td>
-			);
-		}
-		return daysInMonth;
-	});
-
-	const monthDaysSlots = (() => {
-		var totalSlots = [...getBlanksFields(), ...getMonthsDaysFields()];
-		let rows = [];
-		let cells = [];
-
-		totalSlots.forEach((row, i) => {
-			if (i % 7 !== 0) {
-				cells.push(row); // if index not equal 7 that means not go to next week
-			} else {
-				rows.push(cells); // when reach next week we contain all td in last week to rows
-				cells = []; // empty container
-				cells.push(row); // in current loop we still push current row to new container
-			}
-			if (i === totalSlots.length - 1) { // when end loop we add remain date
-				rows.push(cells);
-			}
-		});
-
-		return rows;
-	});
-
-	let daysinmonth = monthDaysSlots().map((day, index) => {
-		return <tr key={index}>{day}</tr>;
-	});
 
 	return (
 		<div className="container">
-			<Modal handleShowModal={() => handleShowModal(false)} showModal={showModal}>
-				<Reminderform />
-			</Modal>
+			<RenderModal />
 			<div className="button-container">
 				<Button color='success' text='add reminder' type="button" onClick={() => handleShowModal(true)} />
 			</div>
