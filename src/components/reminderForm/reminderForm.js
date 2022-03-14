@@ -10,10 +10,12 @@ import Button from '../button/Button';
 import useCurrentDateTime from '../../hooks/useCurrentDateTime';
 import useForm from '../../hooks/useForm';
 import './reminderForm.scss';
+import useModal from '../../hooks/useModal';
 
 const Reminderform = ({ reminderData }) => {
 	const dispatch = useDispatch();
 	const { weather } = useSelector(selectCalendar);
+	const { handleShowModal } = useModal();
 	const { reminders, newReminders } = useSelector(selectReminder);
 	const { currentTime, endOfMonth, startOfMonth } = useCurrentDateTime();
 	const { data, setData, handleSubmit, handleInputChange, errors } = useForm({
@@ -70,7 +72,8 @@ const Reminderform = ({ reminderData }) => {
 			...data,
 			weather: weather[0] !== null ? weather[0] : null,
 		}));
-	}, [data, updateReminder, dispatch, dateWeatherConditionsThunk, weather]);
+		handleShowModal(false);
+	}, [data, updateReminder, dispatch, handleShowModal, dateWeatherConditionsThunk, weather]);
 
 	const incrementSubmit = React.useCallback(async () => {
 		await dispatch(dateWeatherConditionsThunk(data.city));
@@ -84,7 +87,8 @@ const Reminderform = ({ reminderData }) => {
 			...data,
 			weather: weather[0] !== null ? weather[0] : null,
 		});
-	}, [data, dateWeatherConditionsThunk, dispatch, incrementReminder, weather]);
+		handleShowModal(false);
+	}, [data, dateWeatherConditionsThunk, dispatch, handleShowModal, incrementReminder, weather]);
 
 	React.useEffect(() => {
 		if (reminderData) {

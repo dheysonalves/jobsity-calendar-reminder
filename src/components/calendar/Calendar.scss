@@ -23,10 +23,11 @@
 	}
 
 	td.calendar-day {
-		border: 2px dashed $border-gray;
+		border: 2px solid $border-gray;
 		padding: 0.25rem;
 		text-align: left;
 		vertical-align: baseline;
+		width: 300px;
 
 		&:hover {
 			background-color: $border-gray;
@@ -61,5 +62,48 @@
 
 	@media screen and (min-width: $medium-queries) {
 		justify-content: flex-end;
+	}
+}
+
+.reminder-container {
+	padding: 0.5rem;
+	margin: 0.75rem 1rem;
+	border-radius: 8px;
+
+	.title-container {
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+	}
+
+	.weather-container {
+		margin-top: 0.25rem;
+		margin-bottom: 1rem;
+	}
+
+	p.cut-text-overflow {
+		text-overflow: ellipsis;
+		overflow: hidden;
+		width: 400px;
+		height: 1.2em;
+		white-space: nowrap;
+	}
+
+	p.reminder-title {
+		color: $white;
+		margin: 0;
+		padding-bottom: 0.25rem;
+		font-size: $fs-large;
+		font-weight: 600;
+	}
+
+	span.reminder-description {
+		padding-right: 0.25rem;
+		font-size: $fs-base;
+		color: $white;
+	}
+
+	:is(p, span).yellow-case {
+		color: $dark_gray;
 	}
 }

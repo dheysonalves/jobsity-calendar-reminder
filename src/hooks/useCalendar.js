@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import moment from 'moment';
 
 function useCalendar(reminders, onDayClick) {
@@ -50,11 +50,49 @@ function useCalendar(reminders, onDayClick) {
 					onDayClick(e, day)
 				}>
 					{day}
+					{
+						reminders.filter(item => item.id === day.toString()).map((item, key) => {
+							const isBgYellow = item.color === 'yellow' ? 'yellow-case' : '';
+							return (
+								<div key={key} className={`reminder-container  ${item.color}-bg`}>
+									<div className="title-container">
+										<p className={`reminder-title cut-text-overflow ${isBgYellow}`}>
+											{item.reminder}
+										</p>
+										{
+											item.weather && (
+												<div className='weather-container'>
+													<span className="reminder-description">
+														Weather: {item.weather.main} /
+													</span>
+													<span className='reminder-description'>
+														{item.weather.description}
+													</span>
+												</div>
+											)
+										}
+
+									</div>
+									<div>
+										<span className={`reminder-description ${isBgYellow}`}>
+											{item.city},
+										</span>
+										<span className={`reminder-description ${isBgYellow}`}>
+											{item.date}
+										</span>
+										<span className={`reminder-description ${isBgYellow}`}>
+											{item.time}
+										</span>
+									</div>
+								</div>
+							);
+						})
+					}
 				</td>
 			);
 		}
 		return daysInMonth;
-	}, [onDayClick]);
+	}, [onDayClick, reminders]);
 
 	const monthDaysSlots = (() => {
 		var totalSlots = [...getBlanksFields(), ...getMonthsDaysFields()];
@@ -81,6 +119,16 @@ function useCalendar(reminders, onDayClick) {
 	let daysinmonth = monthDaysSlots().map((day, index) => {
 		return <tr key={index}>{day}</tr>;
 	});
+
+	useEffect(() => {
+		reminders.find((item) => {
+			if (item.id === "15") {
+				return (
+					console.log(item.reminder)
+				);
+			}
+		});
+	}, [reminders]);
 
 	return {
 		weekdayshortname,
