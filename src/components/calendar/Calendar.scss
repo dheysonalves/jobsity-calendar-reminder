@@ -55,6 +55,11 @@
 
 .button-container {
 	display: flex;
-	justify-content: flex-end;
+	flex: 1;
+	justify-content: center;
 	margin-bottom: 2em;
+
+	@media screen and (min-width: $medium-queries) {
+		justify-content: flex-end;
+	}
 }
