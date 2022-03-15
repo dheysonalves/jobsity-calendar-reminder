@@ -34,6 +34,12 @@ or
 yarn install
 ```
 
+Add env variable for weather service on .env file on root folder:
+
+```
+REACT_APP_OPEN_WEATHER_API_KEY=
+```
+
 ## ☕ Using
 
 To use, follow these rules:
