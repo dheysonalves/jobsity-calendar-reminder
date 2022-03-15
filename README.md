@@ -1,4 +1,4 @@
-# Calender Reminders
+# Calendar Reminder
 
  <img src="./assets/desktop-fullsize.png" alt="exemplo imagem"  />
 
