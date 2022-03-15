@@ -19,7 +19,7 @@ export default function Button({ color, text, type = 'button', isDisabled, onCli
 
 
 	return (
-		<button type={type} className={`main-button ${getColor()}`} disabled={isDisabled} onClick={onClick}>{text}</button>
+		<button type={type} className={`main-button ${getColor()} mt-16`} disabled={isDisabled} onClick={onClick}>{text}</button>
 	);
 }
 
