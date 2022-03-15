@@ -2,9 +2,12 @@
 @import "../../styles/_sizes.scss";
 
 button.main-button {
+	@media screen and (max-width: $medium-queries) {
+		font-size: $fs-base;
+	}
 	outline: none;
 	border: none;
-	padding: 0.8em;
+	padding: 0.8rem;
 	text-transform: uppercase;
 	color: $white;
 	font-weight: 600;
