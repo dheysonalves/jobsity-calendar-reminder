@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback } from 'react';
 import moment from 'moment';
 
 function useCalendar(reminders, onDayClick) {
@@ -13,13 +13,13 @@ function useCalendar(reminders, onDayClick) {
 		);
 	});
 
-	const monthDays = (() => {
+	const monthDays = useCallback(() => {
 		return dateObject.daysInMonth();
-	});
+	}, [dateObject]);
 
-	const currentDay = () => {
+	const currentDay = useCallback(() => {
 		return dateObject.format("D");
-	};
+	}, [dateObject]);
 
 	const firstDayOfMonth = (() => {
 		let firstDay = moment(dateObject)
@@ -41,20 +41,19 @@ function useCalendar(reminders, onDayClick) {
 	const getMonthsDaysFields = useCallback(() => {
 		let daysInMonth = [];
 		for (let day = 1; day <= monthDays(); day++) {
-			let current = day == currentDay() ? "today" : "";
-
-			// let reminder = reminders.find((item) => item.id === day.toString());
+			let current = day === currentDay() ? "today" : "";
+			let beforeToday = day < currentDay() ? "empty" : "";
 
 			daysInMonth.push(
-				<td key={day} id={`calendar-day-${day}`} className={`calendar-day ${current}`} onClick={e =>
-					onDayClick(e, day)
-				}>
-					{day}
+				<td key={day} id={`calendar-day-${day}`} className={`calendar-day ${current} ${beforeToday}`}>
+					<span className="day-span">{day}</span>
 					{
-						reminders.filter(item => item.id === day.toString()).map((item, key) => {
+						reminders.filter(item => item.day === day.toString()).map((item, key) => {
 							const isBgYellow = item.color === 'yellow' ? 'yellow-case' : '';
 							return (
-								<div key={key} className={`reminder-container  ${item.color}-bg`}>
+								<div key={key} className={`reminder-container  ${item.color}-bg`} onClick={e =>
+									onDayClick(e, item.id)
+								}>
 									<div className="title-container">
 										<p className={`reminder-title cut-text-overflow ${isBgYellow}`}>
 											{item.reminder}
@@ -92,7 +91,7 @@ function useCalendar(reminders, onDayClick) {
 			);
 		}
 		return daysInMonth;
-	}, [onDayClick, reminders]);
+	}, [currentDay, monthDays, onDayClick, reminders]);
 
 	const monthDaysSlots = (() => {
 		var totalSlots = [...getBlanksFields(), ...getMonthsDaysFields()];
@@ -119,16 +118,6 @@ function useCalendar(reminders, onDayClick) {
 	let daysinmonth = monthDaysSlots().map((day, index) => {
 		return <tr key={index}>{day}</tr>;
 	});
-
-	useEffect(() => {
-		reminders.find((item) => {
-			if (item.id === "15") {
-				return (
-					console.log(item.reminder)
-				);
-			}
-		});
-	}, [reminders]);
 
 	return {
 		weekdayshortname,
