@@ -25,7 +25,6 @@ export const calendarSlice = createSlice({
 				state.weatherStatus = 'loading';
 			})
 			.addCase(dateWeatherConditionsThunk.fulfilled, (state, action) => {
-				console.log(action.payload);
 				state.weatherStatus = 'idle';
 				state.weather = action.payload;
 			});

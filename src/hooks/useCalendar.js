@@ -3,7 +3,7 @@ import moment from 'moment';
 
 function useCalendar(reminders, onDayClick) {
 	const [dateObject] = useState(moment());
-	const weekdayshort = moment.weekdaysShort();
+	const weekdayshort = moment.weekdays();
 
 	const weekdayshortname = weekdayshort.map(day => {
 		return (
@@ -50,6 +50,7 @@ function useCalendar(reminders, onDayClick) {
 					{
 						reminders.filter(item => item.day === day.toString()).map((item, key) => {
 							const isBgYellow = item.color === 'yellow' ? 'yellow-case' : '';
+
 							return (
 								<div key={key} className={`reminder-container  ${item.color}-bg`} onClick={e =>
 									onDayClick(e, item.id)
@@ -61,10 +62,10 @@ function useCalendar(reminders, onDayClick) {
 										{
 											item.weather && (
 												<div className='weather-container'>
-													<span className="reminder-description">
+													<span className={`reminder-description ${isBgYellow}`}>
 														Weather: {item.weather.main} /
 													</span>
-													<span className='reminder-description'>
+													<span className={`reminder-description ${isBgYellow}`}>
 														{item.weather.description}
 													</span>
 												</div>

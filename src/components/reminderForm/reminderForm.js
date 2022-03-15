@@ -15,7 +15,7 @@ import { handleShowModal } from '../modal/modalSlice';
 
 const Reminderform = ({ reminderData }) => {
 	const dispatch = useDispatch();
-	const { weather } = useSelector(selectCalendar);
+	const { weather, weatherStatus  } = useSelector(selectCalendar);
 	const { reminders } = useSelector(selectReminder);
 	const { currentTime, endOfMonth, startOfMonth } = useCurrentDateTime();
 	const { data, setData, handleSubmit, handleInputChange, errors } = useForm({
@@ -142,7 +142,7 @@ const Reminderform = ({ reminderData }) => {
 					{errors.color && <p className="form-error">{errors.color}</p>}
 				</div>
 			</div>
-			<Button type="submit" text='SUBMIT' color='success' />
+			<Button type="submit" text='SUBMIT' color='success' isDisabled={weatherStatus === 'loading'} />
 		</form>
 	);
 };

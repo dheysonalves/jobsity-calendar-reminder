@@ -26,7 +26,9 @@ export default function Calendar() {
 	const RenderModal = useCallback(() => {
 		let specificReminder = null;
 
-		specificReminder = reminders.find(item => item.id === daySelected);
+		if (daySelected) {
+			specificReminder = reminders.find(item => item.id === daySelected);
+		}
 
 		return (
 			<Modal handleShowModal={() => dispatch(handleShowModal(false))} showModal={showModal}>
@@ -34,8 +36,6 @@ export default function Calendar() {
 			</Modal>
 		);
 	}, [reminders, showModal, daySelected, dispatch]);
-
-	console.log(showModal);
 
 	return (
 		<div className="container">
