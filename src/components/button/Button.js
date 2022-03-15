@@ -7,11 +7,11 @@ export default function Button({ color, text, type = 'button', isDisabled, onCli
 	const getColor = (() => {
 		switch (color) {
 			case 'success':
-				return 'bg-success';
+				return 'green-bg';
 			case 'alert':
-				return 'bg-alert contrast-color';
+				return 'yellow-bg contrast-color';
 			case 'danger':
-				return 'bg-danger';
+				return 'red-bg';
 			default:
 				return '';
 		}
