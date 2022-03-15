@@ -1,44 +1,63 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app), using the [Redux](https://redux.js.org/) and [Redux Toolkit](https://redux-toolkit.js.org/) template.
+# Calender Reminders
 
-## Available Scripts
+ <img src="./assets/desktop-fullsize.png" alt="exemplo imagem"  />
 
-In the project directory, you can run:
+> It is possible to create, delete and update a reminder related to a specific day on the month. With information about the reminder, date, time, city and weather conditions service.
 
-### `npm start`
+The goal of this exercise is to create a demo calendar application using React.
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- Ability to add a new "reminder" (max 30 chars) for a user entered day and time. Also,
+include a city.
+- Display reminders on the calendar view in the correct time order.
+- Allow the user to select color when creating a reminder and display it appropriately.
+- Ability to edit reminders – including changing text, city, day, time and color.
+- Add a weather service call from a free API such as Open Weather Map, and get the
+weather forecast (ex. Rain) for the date of the calendar reminder based on the city.
+- Unit test the functionality: Ability to add a new "reminder" (max 30 chars) for a user
+entered day and time. Also, include a city
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+## 🚀 Setup
 
-### `npm test`
+To install follow these rules:
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```
+git clone
+```
 
-### `npm run build`
+then to install the dependencies:
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```
+npm install
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+or
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+yarn install
+```
 
-### `npm run eject`
+## ☕ Using
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+To use, follow these rules:
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+To start the project:
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+```
+npm run start
+```
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+To run the tests:
 
-## Learn More
+```
+npm run test
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## 📫 Contribute
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+To contribute to the project, follow these steps:
+
+1. Fork this repository.
+2. Create a branch: `git checkout -b <branch_name>`.
+3. Make your changes and commit them: `git commit -m '<message_commit>'`
+4. Push to the original branch: `git push origin <project_name> / <local>`
+5. Create the pull request.
+
+Alternatively, see the GitHub documentation at [how to create a pull request](<https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/creating-a-pull-request>).
