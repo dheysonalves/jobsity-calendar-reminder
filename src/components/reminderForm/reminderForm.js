@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import { v4 as uuidv4 } from 'uuid';
 
 import { dateWeatherConditionsThunk, selectCalendar } from '../calendar/calendarSlice';
-import { selectReminder, createReminder, updateReminder, deleteReminder } from './reminderFormSlice';
+import { createReminder, updateReminder, deleteReminder } from './reminderFormSlice';
 
 import Button from '../button/Button';
 import useCurrentDateTime from '../../hooks/useCurrentDateTime';
@@ -16,7 +16,6 @@ import { handleShowModal } from '../modal/modalSlice';
 const Reminderform = ({ reminderData, isEdit, handleLocalModal }) => {
 	const dispatch = useDispatch();
 	const { weather, weatherStatus } = useSelector(selectCalendar);
-	const { reminders } = useSelector(selectReminder);
 	const { currentTime, endOfMonth, startOfMonth } = useCurrentDateTime();
 	const { data, setData, handleSubmit, handleInputChange, errors } = useForm({
 		validations: {
@@ -55,7 +54,7 @@ const Reminderform = ({ reminderData, isEdit, handleLocalModal }) => {
 				},
 			}
 		},
-		initialValues: { // used to initialize the data
+		initialValues: {
 			reminder: '',
 			city: '',
 			date: '',
@@ -68,7 +67,6 @@ const Reminderform = ({ reminderData, isEdit, handleLocalModal }) => {
 
 	const updateSubmit = React.useCallback(async () => {
 		await dispatch(dateWeatherConditionsThunk(data.city));
-		console.log(moment(data.date).format('DD'));
 		await dispatch(updateReminder({
 			id: uuidv4(),
 			...data,
@@ -102,10 +100,6 @@ const Reminderform = ({ reminderData, isEdit, handleLocalModal }) => {
 			reminderData;
 		};
 	}, [isEdit, reminderData, setData]);
-
-	React.useEffect(() => {
-		console.log('reminders: ', reminders, errors);
-	}, [reminders, errors, data]);
 
 	return (
 		<form className='form-container' onSubmit={(e) => reminderData ? handleSubmit(e, updateSubmit) : handleSubmit(e, incrementSubmit)}>
