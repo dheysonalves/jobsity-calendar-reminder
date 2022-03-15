@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import { v4 as uuidv4 } from 'uuid';
 
 import { dateWeatherConditionsThunk, selectCalendar } from '../calendar/calendarSlice';
-import { selectReminder, createReminder, updateReminder } from './reminderFormSlice';
+import { selectReminder, createReminder, updateReminder, deleteReminder } from './reminderFormSlice';
 
 import Button from '../button/Button';
 import useCurrentDateTime from '../../hooks/useCurrentDateTime';
@@ -13,7 +13,7 @@ import useForm from '../../hooks/useForm';
 import './reminderForm.scss';
 import { handleShowModal } from '../modal/modalSlice';
 
-const Reminderform = ({ reminderData }) => {
+const Reminderform = ({ reminderData, isEdit, handleLocalModal }) => {
 	const dispatch = useDispatch();
 	const { weather, weatherStatus  } = useSelector(selectCalendar);
 	const { reminders } = useSelector(selectReminder);
@@ -61,46 +61,51 @@ const Reminderform = ({ reminderData }) => {
 			date: '',
 			time: '',
 			color: '',
+			day: '',
 			weather: null
 		},
 	});
 
 	const updateSubmit = React.useCallback(async () => {
 		await dispatch(dateWeatherConditionsThunk(data.city));
+		console.log(moment(data.date).format('DD'));
 		await dispatch(updateReminder({
 			id: uuidv4(),
-			day: moment(data.date).format('DD'),
 			...data,
+			day: moment(data.date).format('DD'),
 			weather: weather[0] !== null ? weather[0] : null,
 		}));
 		dispatch(handleShowModal(false));
-		setData(null);
-	}, [data, dispatch, setData, weather]);
+	}, [data, dispatch, weather]);
 
 	const incrementSubmit = React.useCallback(async () => {
 		await dispatch(dateWeatherConditionsThunk(data.city));
 		await dispatch(createReminder({
 			id: uuidv4(),
-			day: moment(data.date).format('DD'),
 			...data,
+			day: moment(data.date).format('DD'),
 			weather: weather !== null ? weather[0] : null,
 		}));
+		handleLocalModal(false);
+	}, [dispatch, data, weather, handleLocalModal]);
+
+	const deleteReminderOnClick = React.useCallback(async () => {
+		await dispatch(deleteReminder(data.id));
 		dispatch(handleShowModal(false));
-		setData(null);
-	}, [dispatch, data, weather, setData]);
+	}, [data.id, dispatch]);
 
 	React.useEffect(() => {
-		if (reminderData) {
+		if (reminderData && isEdit) {
 			setData(reminderData);
 		}
 		return () => {
 			reminderData;
 		};
-	}, [reminderData, setData]);
+	}, [isEdit, reminderData, setData]);
 
 	React.useEffect(() => {
 		console.log('reminders: ', reminders, errors);
-	}, [reminders, errors]);
+	}, [reminders, errors, data]);
 
 	return (
 		<form className='form-container' onSubmit={(e) => reminderData ? handleSubmit(e, updateSubmit) : handleSubmit(e, incrementSubmit)}>
@@ -143,12 +148,19 @@ const Reminderform = ({ reminderData }) => {
 				</div>
 			</div>
 			<Button type="submit" text='SUBMIT' color='success' isDisabled={weatherStatus === 'loading'} />
+			{
+				isEdit && (
+					<Button type="button" text='DELETE' color='danger' isDisabled={weatherStatus === 'loading'} onClick={() => deleteReminderOnClick()}/>
+				)
+			}
 		</form>
 	);
 };
 
 Reminderform.propTypes = {
-	reminderData: PropTypes.object
+	reminderData: PropTypes.object,
+	isEdit: PropTypes.bool,
+	handleLocalModal: PropTypes.func,
 };
 
 export default Reminderform;
