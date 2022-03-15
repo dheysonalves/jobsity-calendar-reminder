@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
 import reminderReducer, {
-	incrementReminder,
+	createReminder,
 	deleteReminder,
 } from './reminderFormSlice';
 
@@ -32,8 +32,8 @@ describe('counter reducer', () => {
 		});
 	});
 
-	it('should handle incrementReminder', () => {
-		const actual = reminderReducer(initialState, incrementReminder(DATA));
+	it('should handle createReminder', () => {
+		const actual = reminderReducer(initialState, createReminder(DATA));
 
 		expect(actual.reminders).toEqual([DATA]);
 	});

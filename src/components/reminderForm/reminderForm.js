@@ -2,21 +2,21 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
 import PropTypes from "prop-types";
+import { v4 as uuidv4 } from 'uuid';
 
 import { dateWeatherConditionsThunk, selectCalendar } from '../calendar/calendarSlice';
-import { selectReminder, incrementReminder, updateReminder } from './reminderFormSlice';
+import { selectReminder, createReminder, updateReminder } from './reminderFormSlice';
 
 import Button from '../button/Button';
 import useCurrentDateTime from '../../hooks/useCurrentDateTime';
 import useForm from '../../hooks/useForm';
 import './reminderForm.scss';
-import useModal from '../../hooks/useModal';
+import { handleShowModal } from '../modal/modalSlice';
 
 const Reminderform = ({ reminderData }) => {
 	const dispatch = useDispatch();
 	const { weather } = useSelector(selectCalendar);
-	const { handleShowModal } = useModal();
-	const { reminders, newReminders } = useSelector(selectReminder);
+	const { reminders } = useSelector(selectReminder);
 	const { currentTime, endOfMonth, startOfMonth } = useCurrentDateTime();
 	const { data, setData, handleSubmit, handleInputChange, errors } = useForm({
 		validations: {
@@ -68,37 +68,39 @@ const Reminderform = ({ reminderData }) => {
 	const updateSubmit = React.useCallback(async () => {
 		await dispatch(dateWeatherConditionsThunk(data.city));
 		await dispatch(updateReminder({
-			id: moment(data.date).format('DD'),
+			id: uuidv4(),
+			day: moment(data.date).format('DD'),
 			...data,
 			weather: weather[0] !== null ? weather[0] : null,
 		}));
-		handleShowModal(false);
-	}, [data, updateReminder, dispatch, handleShowModal, dateWeatherConditionsThunk, weather]);
+		dispatch(handleShowModal(false));
+		setData(null);
+	}, [data, dispatch, setData, weather]);
 
 	const incrementSubmit = React.useCallback(async () => {
 		await dispatch(dateWeatherConditionsThunk(data.city));
-		await dispatch(incrementReminder({
-			id: moment(data.date).format('DD'),
+		await dispatch(createReminder({
+			id: uuidv4(),
+			day: moment(data.date).format('DD'),
 			...data,
-			weather: weather[0] !== null ? weather[0] : null,
+			weather: weather !== null ? weather[0] : null,
 		}));
-		setData({
-			id: moment(data.date).format('DD'),
-			...data,
-			weather: weather[0] !== null ? weather[0] : null,
-		});
-		handleShowModal(false);
-	}, [data, dateWeatherConditionsThunk, dispatch, handleShowModal, incrementReminder, weather]);
+		dispatch(handleShowModal(false));
+		setData(null);
+	}, [dispatch, data, weather, setData]);
 
 	React.useEffect(() => {
 		if (reminderData) {
 			setData(reminderData);
 		}
+		return () => {
+			reminderData;
+		};
 	}, [reminderData, setData]);
 
 	React.useEffect(() => {
-		console.log('reminders: ', reminders, newReminders, errors);
-	}, [reminders, newReminders, errors]);
+		console.log('reminders: ', reminders, errors);
+	}, [reminders, errors]);
 
 	return (
 		<form className='form-container' onSubmit={(e) => reminderData ? handleSubmit(e, updateSubmit) : handleSubmit(e, incrementSubmit)}>
@@ -120,7 +122,7 @@ const Reminderform = ({ reminderData }) => {
 				</div>
 				<div className='form-group'>
 					<label htmlFor='time-input' className='form-label'>Time</label>
-					<input type="time" min={currentTime} max="00:00" id='time-input' className='form-input' placeholder='Place your time' name="time" value={data.time || ''} onChange={(e) => handleInputChange(e)} />
+					<input type="time" min={currentTime} max="23:59" id='time-input' className='form-input' placeholder='Place your time' name="time" value={data.time || ''} onChange={(e) => handleInputChange(e)} />
 					{errors.time && <p className="form-error">{errors.time}</p>}
 				</div>
 				<div className='form-group' >
