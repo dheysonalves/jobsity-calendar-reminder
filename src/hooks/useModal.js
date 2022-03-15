@@ -1,15 +1,15 @@
 import { useState, useCallback } from 'react';
 
 function useModal() {
-	const [showModal, updateShowModal] = useState(false);
+	const [showLocalModal, updateLocal] = useState(false);
 
-	const handleShowModal = useCallback((value) => {
-		updateShowModal(value);
-	}, [updateShowModal]);
+	const handleModal = useCallback((value) => {
+		updateLocal(value);
+	}, [updateLocal]);
 
 	return {
-		handleShowModal,
-		showModal,
+		handleModal,
+		showLocalModal,
 	};
 }
 
