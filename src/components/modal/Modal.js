@@ -14,6 +14,7 @@ export default function Modal({ showModal, handleShowModal, children }) {
 			shouldCloseOnOverlayClick={true}
 			appElement={document.getElementById('root')}
 			className="modal-container"
+			data-testid='modal-container'
 		>
 			<div className="container-close-btn">
 				<MdClose onClick={handleShowModal} color="#EB5757" size={28} className="cursor-pointer" />

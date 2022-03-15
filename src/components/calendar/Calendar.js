@@ -52,7 +52,7 @@ export default function Calendar() {
 			<RenderModalEdit />
 			<RenderModal />
 			<div className="button-container">
-				<Button color='success' text='add reminder' type="button" onClick={() => handleModal(true)} />
+				<Button color='success' text='add reminder' type="button" onClick={() => handleModal(true)} id="button-add-reminder" />
 			</div>
 
 			<table className='table-container'>

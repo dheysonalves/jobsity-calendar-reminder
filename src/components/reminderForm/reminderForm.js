@@ -15,7 +15,7 @@ import { handleShowModal } from '../modal/modalSlice';
 
 const Reminderform = ({ reminderData, isEdit, handleLocalModal }) => {
 	const dispatch = useDispatch();
-	const { weather, weatherStatus  } = useSelector(selectCalendar);
+	const { weather, weatherStatus } = useSelector(selectCalendar);
 	const { reminders } = useSelector(selectReminder);
 	const { currentTime, endOfMonth, startOfMonth } = useCurrentDateTime();
 	const { data, setData, handleSubmit, handleInputChange, errors } = useForm({
@@ -112,45 +112,45 @@ const Reminderform = ({ reminderData, isEdit, handleLocalModal }) => {
 			<div className="wrapper">
 				<div className='form-group'>
 					<label htmlFor='reminder-input' className='form-label'>Reminder</label>
-					<input type="text" id='reminder-input' className='form-input' placeholder='Place your reminder' max={30} maxLength={30} name="reminder" value={data.reminder || ''} onChange={(e) => handleInputChange(e)} />
+					<input type="text" id='reminder-input' aria-label='reminder-input' className='form-input' placeholder='Place your reminder' max={30} maxLength={30} name="reminder" value={data.reminder || ''} onChange={(e) => handleInputChange(e)} />
 					{errors.reminder && <p className="form-error">{errors.reminder}</p>}
 				</div>
 				<div className='form-group'>
 					<label htmlFor='city-input' className='form-label'>City</label>
-					<input type="text" id='city-input' className='form-input' placeholder='Place your city' name="city" value={data.city} onChange={(e) => handleInputChange(e)} />
+					<input type="text" id='city-input' aria-label='city-input' className='form-input' placeholder='Place your city' name="city" value={data.city} onChange={(e) => handleInputChange(e)} />
 					{errors.city && <p className="form-error">{errors.city}</p>}
 				</div>
 				<div className='form-group'>
 					<label htmlFor='date-input' className='form-label'>Date</label>
-					<input type="date" min={startOfMonth} max={endOfMonth} id='date-input' className='form-input' placeholder='Place your date' name="date" value={data.date || ''} onChange={(e) => handleInputChange(e)} />
+					<input type="date" min={startOfMonth} max={endOfMonth} id='date-input' aria-label='date-input' className='form-input' placeholder='Place your date' name="date" value={data.date || ''} onChange={(e) => handleInputChange(e)} />
 					{errors.date && <p className="form-error">{errors.date}</p>}
 				</div>
 				<div className='form-group'>
 					<label htmlFor='time-input' className='form-label'>Time</label>
-					<input type="time" min={currentTime} max="23:59" id='time-input' className='form-input' placeholder='Place your time' name="time" value={data.time || ''} onChange={(e) => handleInputChange(e)} />
+					<input type="time" min={currentTime} max="23:59" id='time-input' aria-label='time-input' className='form-input' placeholder='Place your time' name="time" value={data.time || ''} onChange={(e) => handleInputChange(e)} />
 					{errors.time && <p className="form-error">{errors.time}</p>}
 				</div>
 				<div className='form-group' >
 					<label className='form-label'>Color</label>
 					<div className='row'>
-						<input type="radio" id='color-green-input' className='form-input-radio' name="color" value="green" checked={data.color === 'green' || false} onChange={(e) => handleInputChange(e)} />
+						<input type="radio" id='color-green-input' aria-label='color-green-input' className='form-input-radio' name="color" value="green" checked={data.color === 'green' || false} onChange={(e) => handleInputChange(e)} />
 						<label htmlFor='color-green-input' className='form-label'>Green</label>
 					</div>
 					<div className='row'>
-						<input type="radio" id='color-yellow-input' className='form-input-radio' name="color" value="yellow" checked={data.color === 'yellow' || false} onChange={(e) => handleInputChange(e)} />
+						<input type="radio" id='color-yellow-input' aria-label='color-yellow-input' className='form-input-radio' name="color" value="yellow" checked={data.color === 'yellow' || false} onChange={(e) => handleInputChange(e)} />
 						<label htmlFor='color-yellow-input' className='form-label'>Yellow</label>
 					</div>
 					<div className='row'>
-						<input type="radio" id='color-red-input' className='form-input-radio' name="color" value="red" checked={data.color === 'red' || false} onChange={(e) => handleInputChange(e)} />
+						<input type="radio" id='color-red-input' aria-label='color-red-input' className='form-input-radio' name="color" value="red" checked={data.color === 'red' || false} onChange={(e) => handleInputChange(e)} />
 						<label htmlFor='color-red-input' className='form-label'>Red</label>
 					</div>
 					{errors.color && <p className="form-error">{errors.color}</p>}
 				</div>
 			</div>
-			<Button type="submit" text='SUBMIT' color='success' isDisabled={weatherStatus === 'loading'} />
+			<Button type="submit" text='SUBMIT' color='success' isDisabled={weatherStatus === 'loading'} id="submit-create-reminder" />
 			{
 				isEdit && (
-					<Button type="button" text='DELETE' color='danger' isDisabled={weatherStatus === 'loading'} onClick={() => deleteReminderOnClick()}/>
+					<Button type="button" text='DELETE' color='danger' isDisabled={weatherStatus === 'loading'} onClick={() => deleteReminderOnClick()} id="submit-delete-reminder" />
 				)
 			}
 		</form>

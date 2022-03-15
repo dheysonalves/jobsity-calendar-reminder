@@ -58,10 +58,10 @@ function useCalendar(reminders, onDayClick) {
 							const isBgYellow = item.color === 'yellow' ? 'yellow-case' : '';
 
 							return (
-								<div key={key} className={`reminder-container  ${item.color}-bg`} onClick={e =>
+								<div key={key} aria-label={`calendar-day-${day}`} className={`reminder-container  ${item.color}-bg`} onClick={e =>
 									onDayClick(e, item.id)
 								}>
-									<div className="title-container">
+									<div className="title-container" aria-label={`calendar-day-${day}`}>
 										<p className={`reminder-title cut-text-overflow ${isBgYellow}`}>
 											{item.reminder}
 										</p>
