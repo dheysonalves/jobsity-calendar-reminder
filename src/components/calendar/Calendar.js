@@ -1,43 +1,47 @@
 import React, { useState, useCallback } from 'react';
 import ReactModal from 'react-modal';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import './Calendar.scss';
 import Button from '../button/Button';
 import Modal from '../modal/Modal';
 import Reminderform from '../reminderForm/reminderForm';
 import { selectReminder } from '../reminderForm/reminderFormSlice';
-import useModal from '../../hooks/useModal';
 import useCalendar from '../../hooks/useCalendar';
+import { selectModal, handleShowModal } from '../modal/modalSlice';
 
 export default function Calendar() {
-	const { handleShowModal, showModal } = useModal();
-	const [daySelected, updateDaySelected] = useState(0);
+	const [daySelected, updateDaySelected] = useState('');
 	const { reminders } = useSelector(selectReminder);
+	const { showModal } = useSelector(selectModal);
+	const dispatch = useDispatch();
 
-	const onDayClick = useCallback((e, day) => {
+	const onDayClick = useCallback((_e, day) => {
 		updateDaySelected(day);
-		handleShowModal(true);
-	}, [daySelected, handleShowModal, showModal]);
+		dispatch(handleShowModal(true));
+	}, [dispatch]);
 
 	const { weekdayshortname, daysinmonth } = useCalendar(reminders, onDayClick);
 
 	const RenderModal = useCallback(() => {
 		let specificReminder = null;
 
+		specificReminder = reminders.find(item => item.id === daySelected);
+
 		return (
-			<Modal handleShowModal={() => handleShowModal(false)} showModal={showModal}>
+			<Modal handleShowModal={() => dispatch(handleShowModal(false))} showModal={showModal}>
 				<Reminderform reminderData={specificReminder} />
 			</Modal>
 		);
-	}, [handleShowModal, showModal, daySelected, reminders]);
+	}, [reminders, showModal, daySelected, dispatch]);
 
+	console.log(showModal);
 
 	return (
 		<div className="container">
 			<RenderModal />
 			<div className="button-container">
-				<Button color='success' text='add reminder' type="button" onClick={() => handleShowModal(true)} />
+				<Button color='success' text='add reminder' type="button" onClick={() => dispatch(handleShowModal(true))} />
 			</div>
 
 			<table className='table-container'>
