@@ -9,11 +9,13 @@ import Reminderform from '../reminderForm/reminderForm';
 import { selectReminder } from '../reminderForm/reminderFormSlice';
 import useCalendar from '../../hooks/useCalendar';
 import { selectModal, handleShowModal } from '../modal/modalSlice';
+import useModal from '../../hooks/useModal';
 
 export default function Calendar() {
 	const [daySelected, updateDaySelected] = useState('');
 	const { reminders } = useSelector(selectReminder);
 	const { showModal } = useSelector(selectModal);
+	const { handleModal, showLocalModal } = useModal();
 	const dispatch = useDispatch();
 
 	const onDayClick = useCallback((_e, day) => {
@@ -23,7 +25,7 @@ export default function Calendar() {
 
 	const { weekdayshortname, daysinmonth } = useCalendar(reminders, onDayClick);
 
-	const RenderModal = useCallback(() => {
+	const RenderModalEdit = useCallback(() => {
 		let specificReminder = null;
 
 		if (daySelected) {
@@ -32,16 +34,25 @@ export default function Calendar() {
 
 		return (
 			<Modal handleShowModal={() => dispatch(handleShowModal(false))} showModal={showModal}>
-				<Reminderform reminderData={specificReminder} />
+				<Reminderform reminderData={specificReminder} isEdit={true} />
 			</Modal>
 		);
-	}, [reminders, showModal, daySelected, dispatch]);
+	}, [daySelected, showModal, reminders, dispatch]);
+
+	const RenderModal = useCallback(() => {
+		return (
+			<Modal handleShowModal={() => handleModal(false)} showModal={showLocalModal}>
+				<Reminderform isEdit={false} handleLocalModal={handleModal} />
+			</Modal>
+		);
+	}, [showLocalModal, handleModal]);
 
 	return (
 		<div className="container">
+			<RenderModalEdit />
 			<RenderModal />
 			<div className="button-container">
-				<Button color='success' text='add reminder' type="button" onClick={() => dispatch(handleShowModal(true))} />
+				<Button color='success' text='add reminder' type="button" onClick={() => handleModal(true)} />
 			</div>
 
 			<table className='table-container'>
