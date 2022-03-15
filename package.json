@@ -16,7 +16,8 @@
     "react-modal": "^3.14.4",
     "react-redux": "^7.2.6",
     "react-scripts": "5.0.0",
-    "sass": "^1.49.9"
+    "sass": "^1.49.9",
+    "uuid": "^8.3.2"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -45,6 +46,6 @@
     "eslint-plugin-import": "^2.25.4",
     "eslint-plugin-jsx-a11y": "^6.5.1",
     "eslint-plugin-react": "^7.29.3",
-    "eslint-plugin-react-hooks": "^4.3.0"
+    "eslint-plugin-react-hooks": "^4.2.1-rc.2-next-2bf7c02f0-20220314"
   }
 }
